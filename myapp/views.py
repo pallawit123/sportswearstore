@@ -86,12 +86,11 @@ def detail(request, image_id):
         })
     else:
         # Handle image not found
-        return render(request, '404.html', status=404)
+        return render(request, '404.html', status=404)  
     
     
     
-    
-    
-    
-
+# men-newarrival
+def newarrival(request):
+    return render(request, 'newarrival.html')
 
