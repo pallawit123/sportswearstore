@@ -223,8 +223,8 @@
               <div class="row">
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Trending Now</h6>
-                  <a class="dropdown-item" href="{% url 'newarrival' %}">New Arrivals</a>
-                  <a class="dropdown-item" href="#">Autumn Winter '23</a>
+                  <a class="dropdown-item" href="{% url 'men_newarrival' %}">New Arrivals</a>
+                  <a class="dropdown-item" href="{% url 'men_autumn_winter' %}">Autumn Winter '23</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Topwear</h6>
@@ -234,47 +234,47 @@
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Bottomwear</h6>
                   <a class="dropdown-item" href="#">Shorts</a>
-                  <a class="dropdown-item" href="#">Skirts</a>
+                  <a class="dropdown-item" href="#">Trackpants & Joggers</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Shop by Activity</h6>
                   <a class="dropdown-item" href="#">Running</a>
                   <a class="dropdown-item" href="#">Yoga</a>
                 </div>
-              </div>
-            </div>
-          </li>
-
+                </div>
+                </div>
+                </li>
           <!-- Women Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="womenDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Women
-            </a>
-            <div class="dropdown-menu adjust-left" aria-labelledby="womenDropdown">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="dropdown-header">Trending Now</h6>
-                  <a class="dropdown-item" href="{% url 'newarrival' %}">New Arrivals</a>
-                  <a class="dropdown-item" href="#">Autumn Winter '23</a>
-                </div>
-                <div class="col-sm-3">
-                  <h6 class="dropdown-header">Topwear</h6>
-                  <a class="dropdown-item" href="#">Tshirts</a>
-                  <a class="dropdown-item" href="#">Polos</a>
-                </div>
-                <div class="col-sm-3">
-                  <h6 class="dropdown-header">Bottomwear</h6>
-                  <a class="dropdown-item" href="#">Shorts</a>
-                  <a class="dropdown-item" href="#">Skirts</a>
-                </div>
-                <div class="col-sm-3">
-                  <h6 class="dropdown-header">Shop by Activity</h6>
-                  <a class="dropdown-item" href="#">Running</a>
-                  <a class="dropdown-item" href="#">Yoga</a>
-                </div>
-              </div>
-            </div>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="womenDropdown" role="button" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    Women
+  </a>
+  <div class="dropdown-menu adjust-left" aria-labelledby="womenDropdown">
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="dropdown-header">Trending Now</h6>
+        <a class="dropdown-item" href="{% url 'women_newarrival' %}">New Arrivals</a>
+        <a class="dropdown-item" href="{% url 'women_autumn_winter' %}">Autumn Winter '23</a>
+      </div>
+      <div class="col-sm-3">
+        <h6 class="dropdown-header">Topwear</h6>
+        <a class="dropdown-item" href="#">Tshirts</a>
+        <a class="dropdown-item" href="#">Polos</a>
+      </div>
+      <div class="col-sm-3">
+        <h6 class="dropdown-header">Bottomwear</h6>
+        <a class="dropdown-item" href="#">Shorts</a>
+        <a class="dropdown-item" href="#">Trackpants & Joggers</a>
+      </div>
+      <div class="col-sm-3">
+        <h6 class="dropdown-header">Shop by Activity</h6>
+        <a class="dropdown-item" href="#">Running</a>
+        <a class="dropdown-item" href="#">Yoga</a>
+      </div>
+    </div>
+  </div>
+  
           </li>
 
           <!-- Kids Dropdown -->
@@ -287,8 +287,8 @@
               <div class="row">
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Trending Now</h6>
-                  <a class="dropdown-item" href="{% url 'newarrival' %}">New Arrivals</a>
-                  <a class="dropdown-item" href="#">Autumn Winter '23</a>
+                  <a class="dropdown-item" href="{% url 'kids_newarrival' %}">New Arrivals</a>
+                  <a class="dropdown-item" href={% url 'kids_autumn_winter' %}>Autumn Winter '23</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Topwear</h6>
@@ -298,7 +298,7 @@
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Bottomwear</h6>
                   <a class="dropdown-item" href="#">Shorts</a>
-                  <a class="dropdown-item" href="#">Skirts</a>
+                  <a class="dropdown-item" href="#">Trackpants & joggers</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Shop by Activity</h6>
@@ -467,7 +467,7 @@
             <ul>
               <li>HR Team</li>
               <li>Finance Team</li>
-              <li>Content Team</li>
+              <li>Content Team</li> 
             </ul>
           </div>
           <div class="col">
