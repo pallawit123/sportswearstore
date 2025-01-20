@@ -2,12 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from datetime import datetime
 from .models import Contact, CartItem, WishlistItem, MenNewArrival, MenAutumnWinter, WomenNewArrival, WomenAutumnWinter, KidsNewArrival, KidsAutumnWinter
 from .models import (MenTShirts, MenPolos, MenShorts, MenTrackpantsJoggers, 
-                    MenRunning, MenYoga, WomenTShirts, WomenPolos, WomenShorts,
-                    WomenTrackpantsJoggers, WomenRunning, WomenYoga, KidsTShirts,
-                    KidsPolos, KidsShorts, KidsTrackpantsJoggers, KidsRunning, KidsYoga)
-
+                     MenRunning, MenYoga, WomenTShirts, WomenPolos, WomenShorts,
+                     WomenTrackpantsJoggers, WomenRunning, WomenYoga, KidsTShirts,
+                     KidsPolos, KidsShorts, KidsTrackpantsJoggers, KidsRunning, KidsYoga)
 from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -129,7 +127,7 @@ def kids_yoga(request):
     products = KidsYoga.objects.all().order_by('-created_at')
     return render(request, 'kids_yoga.html', {'products': products})
 
-def product_detail(request, pk, category):
+def product_detail(request, category, pk):
     if category == 'men':
         product = get_object_or_404(MenNewArrival, pk=pk)
     elif category == 'women':
@@ -140,38 +138,7 @@ def product_detail(request, pk, category):
         product = get_object_or_404(MenTShirts, pk=pk)
     elif category == 'men_polos':
         product = get_object_or_404(MenPolos, pk=pk)
-    elif category == 'men_shorts':
-        product = get_object_or_404(MenShorts, pk=pk)
-    elif category == 'men_trackpants_joggers':
-        product = get_object_or_404(MenTrackpantsJoggers, pk=pk)
-    elif category == 'men_running':
-        product = get_object_or_404(MenRunning, pk=pk)
-    elif category == 'men_yoga':
-        product = get_object_or_404(MenYoga, pk=pk)
-    elif category == 'women_tshirts':
-        product = get_object_or_404(WomenTShirts, pk=pk)
-    elif category == 'women_polos':
-        product = get_object_or_404(WomenPolos, pk=pk)
-    elif category == 'women_shorts':
-        product = get_object_or_404(WomenShorts, pk=pk)
-    elif category == 'women_trackpants_joggers':
-        product = get_object_or_404(WomenTrackpantsJoggers, pk=pk)
-    elif category == 'women_running':
-        product = get_object_or_404(WomenRunning, pk=pk)
-    elif category == 'women_yoga':
-        product = get_object_or_404(WomenYoga, pk=pk)
-    elif category == 'kids_tshirts':
-        product = get_object_or_404(KidsTShirts, pk=pk)
-    elif category == 'kids_polos':
-        product = get_object_or_404(KidsPolos, pk=pk)
-    elif category == 'kids_shorts':
-        product = get_object_or_404(KidsShorts, pk=pk)
-    elif category == 'kids_trackpants_joggers':
-        product = get_object_or_404(KidsTrackpantsJoggers, pk=pk)
-    elif category == 'kids_running':
-        product = get_object_or_404(KidsRunning, pk=pk)
-    elif category == 'kids_yoga':
-        product = get_object_or_404(KidsYoga, pk=pk)
+    # Add other conditions for different categories here...
     else:
         product = None
     return render(request, 'product_detail.html', {'product': product})

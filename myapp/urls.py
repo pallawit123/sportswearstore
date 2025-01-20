@@ -6,7 +6,8 @@ urlpatterns = [
     path("men/", views.men, name="men"),
     path("contact-us/", views.contact, name="contact"),
     path("newarrival/", views.men_new_arrivals, name="newarrival"),
-    path("newarrival/<str:category>/<int:pk>/", views.product_detail, name="product_detail"),
+ path("<str:category>/product/<int:pk>/", views.product_detail, name="product_detail"),
+
     path("add_to_cart/<str:category>/<int:pk>/", views.add_to_cart, name="add_to_cart"),
     path("add_to_wishlist/<str:category>/<int:pk>/", views.add_to_wishlist, name="add_to_wishlist"),
     path("cart/", views.cart_view, name="cart"),
@@ -17,6 +18,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path("men/newarrival/", views.men_new_arrivals, name="men_newarrival"),
     path("men/autumn-winter/", views.men_autumn_winter, name="men_autumn_winter"),
+    path("men/tshirts/", views.men_tshirts, name="men_tshirts"),
     path("women/newarrival/", views.women_new_arrivals, name="women_newarrival"),
     path("women/autumn-winter/", views.women_autumn_winter, name="women_autumn_winter"),
     path("kids/newarrival/", views.kids_new_arrivals, name="kids_newarrival"),

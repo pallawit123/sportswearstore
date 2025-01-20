@@ -20,6 +20,46 @@
                 </button>
             </div>
             <small class="text-muted mt-3 d-block">Added on {{ product.created_at }}</small>
+            
+            {% if product.category == 'men_tshirts' %}
+                <p>Category: Men's T-Shirts</p>
+            {% elif product.category == 'men_polos' %}
+                <p>Category: Men's Polos</p>
+            {% elif product.category == 'men_shorts' %}
+                <p>Category: Men's Shorts</p>
+            {% elif product.category == 'men_trackpants_joggers' %}
+                <p>Category: Men's Trackpants/Joggers</p>
+            {% elif product.category == 'men_running' %}
+                <p>Category: Men's Running</p>
+            {% elif product.category == 'men_yoga' %}
+                <p>Category: Men's Yoga</p>
+            {% elif product.category == 'women_newarrival'%}
+            <p>Category: Women's NewArrival</p>
+            {% elif product.category == 'women_tshirts' %}
+                <p>Category: Women's T-Shirts</p>
+            {% elif product.category == 'women_polos' %}
+                <p>Category: Women's Polos</p>
+            {% elif product.category == 'women_shorts' %}
+                <p>Category: Women's Shorts</p>
+            {% elif product.category == 'women_trackpants_joggers' %}
+                <p>Category: Women's Trackpants/Joggers</p>
+            {% elif product.category == 'women_running' %}
+                <p>Category: Women's Running</p>
+            {% elif product.category == 'women_yoga' %}
+                <p>Category: Women's Yoga</p>
+            {% elif product.category == 'kids_tshirts' %}
+                <p>Category: Kids' T-Shirts</p>
+            {% elif product.category == 'kids_polos' %}
+                <p>Category: Kids' Polos</p>
+            {% elif product.category == 'kids_shorts' %}
+                <p>Category: Kids' Shorts</p>
+            {% elif product.category == 'kids_trackpants_joggers' %}
+                <p>Category: Kids' Trackpants/Joggers</p>
+            {% elif product.category == 'kids_running' %}
+                <p>Category: Kids' Running</p>
+            {% elif product.category == 'kids_yoga' %}
+                <p>Category: Kids' Yoga</p>
+            {% endif %}
         </div>
     </div>
 </div>
