@@ -1,4 +1,4 @@
-<!-- filepath: /d:/pythonfinal/Hello/templates/product_detail.html -->
+<!-- filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/templates/product_detail.html -->
 {% extends 'base.html' %}
 
 {% block title %}{{ product.title }}{% endblock title %}
@@ -7,24 +7,30 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.title }}" style="object-fit: cover; width: 100%;">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.title }}" style="object-fit: cover; width: 100%;">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
         </div>
         <div class="col-md-6">
             <h1 class="display-4">{{ product.title }}</h1>
             <p class="lead">{{ product.description }}</p>
             <h3 class="price">₹{{ product.price }}</h3>
             <div class="d-flex align-items-center mt-4">
-                <button class="btn btn-primary mr-3">Add to Cart</button>
-                <button class="btn btn-outline-danger">
+                <a href="{% url 'add_to_cart' category product.pk %}" class="btn btn-primary mr-3">Add to Cart</a>
+                <a href="{% url 'add_to_wishlist' category product.pk %}" class="btn btn-outline-danger">
                     <i class="bi bi-heart"></i> Add to Wishlist
-                </button>
+                </a>
             </div>
             <small class="text-muted mt-3 d-block">Added on {{ product.created_at }}</small>
             
             {% if product.category == 'men_tshirts' %}
                 <p>Category: Men's T-Shirts</p>
             {% elif product.category == 'men_polos' %}
-                <p>Category: Men's Polos</p>
+                <p>Category: Men's Polos</p>    
+            {% elif product.category == 'men_autumn_winter' %}
+                <p>Category: Men's Autumn/Winter</p>
             {% elif product.category == 'men_shorts' %}
                 <p>Category: Men's Shorts</p>
             {% elif product.category == 'men_trackpants_joggers' %}
@@ -34,7 +40,7 @@
             {% elif product.category == 'men_yoga' %}
                 <p>Category: Men's Yoga</p>
             {% elif product.category == 'women_newarrival'%}
-            <p>Category: Women's NewArrival</p>
+                <p>Category: Women's NewArrival</p>
             {% elif product.category == 'women_tshirts' %}
                 <p>Category: Women's T-Shirts</p>
             {% elif product.category == 'women_polos' %}

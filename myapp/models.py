@@ -1,3 +1,4 @@
+# filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/myapp/models.py
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -17,12 +18,14 @@ class MenNewArrival(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_new_arrivals/')
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.title
 
 class MenAutumnWinter(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_autumn_winter/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -32,6 +35,7 @@ class MenAutumnWinter(models.Model):
 class MenTShirts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_tshirts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -41,6 +45,7 @@ class MenTShirts(models.Model):
 class MenPolos(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_polos/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -50,6 +55,7 @@ class MenPolos(models.Model):
 class MenShorts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_shorts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -59,6 +65,7 @@ class MenShorts(models.Model):
 class MenTrackpantsJoggers(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_trackpants_joggers/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -68,6 +75,7 @@ class MenTrackpantsJoggers(models.Model):
 class MenRunning(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_running/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -77,6 +85,7 @@ class MenRunning(models.Model):
 class MenYoga(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='men_yoga/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -96,6 +105,7 @@ class WomenNewArrival(models.Model):
 class WomenAutumnWinter(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_autumn_winter/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -105,6 +115,7 @@ class WomenAutumnWinter(models.Model):
 class WomenTShirts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_tshirts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -114,6 +125,7 @@ class WomenTShirts(models.Model):
 class WomenPolos(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_polos/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -123,6 +135,7 @@ class WomenPolos(models.Model):
 class WomenShorts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_shorts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -132,6 +145,7 @@ class WomenShorts(models.Model):
 class WomenTrackpantsJoggers(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_trackpants_joggers/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -141,6 +155,7 @@ class WomenTrackpantsJoggers(models.Model):
 class WomenRunning(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_running/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -150,6 +165,7 @@ class WomenRunning(models.Model):
 class WomenYoga(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='women_yoga/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -169,6 +185,7 @@ class KidsNewArrival(models.Model):
 class KidsAutumnWinter(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_autumn_winter/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -178,6 +195,7 @@ class KidsAutumnWinter(models.Model):
 class KidsTShirts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_tshirts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -187,6 +205,7 @@ class KidsTShirts(models.Model):
 class KidsPolos(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_polos/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -196,6 +215,7 @@ class KidsPolos(models.Model):
 class KidsShorts(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_shorts/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -205,6 +225,7 @@ class KidsShorts(models.Model):
 class KidsTrackpantsJoggers(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_trackpants_joggers/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -214,6 +235,7 @@ class KidsTrackpantsJoggers(models.Model):
 class KidsRunning(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_running/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -223,6 +245,7 @@ class KidsRunning(models.Model):
 class KidsYoga(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='kids_yoga/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -243,3 +266,14 @@ class WishlistItem(models.Model):
 
     def __str__(self):
         return self.product.title
+
+class Product(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='products/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title

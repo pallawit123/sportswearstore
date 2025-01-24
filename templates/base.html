@@ -229,17 +229,17 @@
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Topwear</h6>
                   <a class="dropdown-item" href={% url 'men_tshirts' %}>Tshirts</a>
-                  <a class="dropdown-item" href="#">Polos</a>
+                  <a class="dropdown-item" href={% url 'men_polos'%}>Polos</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Bottomwear</h6>
-                  <a class="dropdown-item" href="#">Shorts</a>
-                  <a class="dropdown-item" href="#">Trackpants & Joggers</a>
+                  <a class="dropdown-item" href={%url 'men_shorts'%}>Shorts</a>
+                  <a <a class="dropdown-item" href="{% url 'women_trackpants_joggers' %}">Trackpants & Joggers</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Shop by Activity</h6>
-                  <a class="dropdown-item" href="#">Running</a>
-                  <a class="dropdown-item" href="#">Yoga</a>
+                  <a class="dropdown-item" href={%url 'men_running'%}>Running</a>
+                  <a class="dropdown-item" href={%url 'men_yoga'%}>Yoga</a>
                 </div>
                 </div>
                 </div>
@@ -259,18 +259,18 @@
       </div>
       <div class="col-sm-3">
         <h6 class="dropdown-header">Topwear</h6>
-        <a class="dropdown-item" href="#">Tshirts</a>
-        <a class="dropdown-item" href="#">Polos</a>
+        <a class="dropdown-item" href={%url 'women_tshirts'%}>Tshirts</a>
+        <a class="dropdown-item" href={"%url 'women_polos"}>Polos</a>
       </div>
       <div class="col-sm-3">
         <h6 class="dropdown-header">Bottomwear</h6>
-        <a class="dropdown-item" href="#">Shorts</a>
-        <a class="dropdown-item" href="#">Trackpants & Joggers</a>
+        <a class="dropdown-item" href={%url 'women_shorts'%}>Shorts</a>
+        <a class="dropdown-item" href={%url 'women_trackpants_joggers'%}>Trackpants & Joggers</a>
       </div>
       <div class="col-sm-3">
         <h6 class="dropdown-header">Shop by Activity</h6>
-        <a class="dropdown-item" href="#">Running</a>
-        <a class="dropdown-item" href="#">Yoga</a>
+        <a class="dropdown-item" href={%url 'women_running'%}>Running</a>
+        <a class="dropdown-item" href={%url 'women_yoga'%}>Yoga</a>
       </div>
     </div>
   </div>
@@ -287,23 +287,23 @@
               <div class="row">
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Trending Now</h6>
-                  <a class="dropdown-item" href="{% url 'kids_newarrival' %}">New Arrivals</a>
-                  <a class="dropdown-item" href={% url 'kids_autumn_winter' %}>Autumn Winter '23</a>
+                  <a class="dropdown-item" href={%url 'kids_newarrival'%}>New Arrivals</a>
+                  <a class="dropdown-item" href={%url 'kids_autumn_winter'%}>Autumn Winter '23</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Topwear</h6>
-                  <a class="dropdown-item" href="#">Tshirts</a>
-                  <a class="dropdown-item" href="#">Polos</a>
+                  <a class="dropdown-item" href={%url 'kids_tshirts'%}>Tshirts</a>
+                  <a class="dropdown-item" href={%url 'kids_polos'%}>Polos</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Bottomwear</h6>
-                  <a class="dropdown-item" href="#">Shorts</a>
-                  <a class="dropdown-item" href="#">Trackpants & joggers</a>
+                  <a class="dropdown-item" href={%url 'kids_shorts'%}>Shorts</a>
+                  <a class="dropdown-item" href={%url 'kids_trackpants_joggers'%}>Trackpants & joggers</a>
                 </div>
                 <div class="col-sm-3">
                   <h6 class="dropdown-header">Shop by Activity</h6>
-                  <a class="dropdown-item" href="#">Running</a>
-                  <a class="dropdown-item" href="#">Yoga</a>
+                  <a class="dropdown-item" href={%url 'kids_running'%}>Running</a>
+                  <a class="dropdown-item" href={%url 'kids_yoga'%}>Yoga</a>
                 </div>
               </div>
             </div>

@@ -1,27 +1,29 @@
-<!-- filepath: /d:/pythonfinal/Hello/templates/kids_autumn_winter.html -->
-{% extends 'base.html' %}
+<!-- filepath: /C:/Users/Dell/Desktop/pythonfinal/sportswearstore/templates/kids_autumn_winter.html -->
+{% extends "base.html" %}
 
-{% block title %}Kids Autumn Winter '23{% endblock title %}
+{% block title %}Kids' Autumn/Winter Collection{% endblock title %}
 
 {% block body %}
 <div class="container mt-5">
-    <h1>Kids Autumn Winter '23</h1>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <h1>Kids' Autumn/Winter Collection</h1>
+    <div class="row">
         {% for product in products %}
-        <div class="col">
-            <div class="card shadow-sm">
-                <a href="{% url 'product_detail' 'kids' product.pk %}">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}" style="object-fit: cover; width: 100%; height: 700px;">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="{% url 'product_detail' 'kids_autumn_winter' product.pk %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}" style="object-fit: cover; width: 100%; height: 300px;">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }}</h5>
                     <p class="card-text">{{ product.description }}</p>
                     <p class="price">₹{{ product.price }}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a href="{% url 'product_detail' 'kids' product.pk %}" class="btn btn-sm btn-outline-secondary">View</a>
-                            <a href="{% url 'add_to_cart' 'kids' product.pk %}" class="btn btn-sm btn-outline-secondary">Add to Cart</a>
-                        </div>
+                        <a href="{% url 'add_to_cart' 'kids_autumn_winter' product.pk %}" class="btn btn-sm btn-outline-secondary">Add to Cart</a>
+                        <a href="{% url 'add_to_wishlist' 'kids_autumn_winter' product.pk %}" class="btn btn-sm btn-outline-danger">Add to Wishlist</a>
                         <small class="text-muted">{{ product.created_at }}</small>
                     </div>
                 </div>

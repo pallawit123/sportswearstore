@@ -1,30 +1,25 @@
-<!-- filepath: /d:/pythonfinal/Hello/templates/kids_newarrival.html -->
-{% extends "base.html" %}
+<!-- filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/templates/men_polos.html -->
+{% extends 'base.html' %}
 
-{% block title %}Men Polos{% endblock %}
+{% block title %}Men's Polos{% endblock title %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1>Men' Polos</h1>
-    <div class="row">
-        {% for product in products %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.title }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a href="{% url 'product_detail' 'kids' product.pk %}" class="btn btn-sm btn-outline-secondary">View</a>
-                            <a href="{% url 'add_to_cart' 'kids' product.pk %}" class="btn btn-sm btn-outline-secondary">Add to Cart</a>
-                        </div>
-                        <small class="text-muted">${{ product.price }}</small>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <a href="{% url 'product_detail' 'men_polos' product.pk %}">
+            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.title }}">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="price">₹{{ product.price }}</p>
+          </div>
         </div>
-        {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
-{% endblock %}
+{% endblock body %}

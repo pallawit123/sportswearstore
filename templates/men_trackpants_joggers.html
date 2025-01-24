@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Men's Trackpants & Joggers
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Men's Trackpants & Joggers</h1>
+    <div class="row">
+        {% if products %}
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{% url 'product_detail' 'men_trackpants_joggers' product.pk %}">
+                        <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.title }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="price">₹{{ product.price }}</p>
+                        {% if product.discount %}
+                            <p class="discount">Discount: {{ product.discount }}%</p>
+                            <p class="original-price">Original Price: ₹{{ product.original_price }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No products available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

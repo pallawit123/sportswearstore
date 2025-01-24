@@ -1,0 +1,33 @@
+<!-- filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/templates/women_autumn_winter.html -->
+{% extends 'base.html' %}
+
+{% block title %}Women's Autumn/Winter Collection{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Women's Autumn/Winter Collection</h1>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="{% url 'product_detail' 'women_autumn_winter' product.pk %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}" style="object-fit: cover; width: 100%; height: 300px;">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="price">₹{{ product.price }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ product.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}
