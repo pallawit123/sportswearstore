@@ -1,8 +1,8 @@
-# filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/Hello/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from myapp import views
 
 admin.site.site_header = "Athletech Admin"
 admin.site.site_title = "Athle Tech Admin Portal"
@@ -10,5 +10,7 @@ admin.site.index_title = "Welcome to AthleTch Sports Wear Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myapp.urls')),
+    path('login/', views.login_view, name='login'),
+    path('register/', views.register_view, name='register'),  # Add this line for the registration view
+    path('', include('myapp.urls')),  # Include your app's URLs
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
