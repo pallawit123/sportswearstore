@@ -10,11 +10,36 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from .models import Product
+from .models import Product, Order
+
+
+
+    
+
+def contact_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        contact_number = request.POST.get('contact_number')
+        message = request.POST.get('message')
+        
+        # Create and save the Contact object
+        contact = Contact(name=name, email=email, contact_number=contact_number, message=message)
+        contact.save()
+        
+        # Add a success message
+        messages.success(request, 'Your message has been sent successfully!')
+        
+        # Redirect to the same page after form submission
+        return redirect('contact')  # Changed from 'contact_us' to 'contact'
+    
+    return render(request, 'contact.html')
+
+
 
 def index(request):
     return render(request, 'index.html')
-
+    
 def men(request):
     return render(request, 'index.html')
 
@@ -171,7 +196,7 @@ def register_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Registration successful. You are now logged in.')
-            return redirect('index')  # Redirect to the home page or any other page
+            return redirect('index')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -185,7 +210,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')  # Redirect to the home page or any other page
+                return redirect('index')
             else:
                 messages.error(request, 'Invalid username or password.')
     else:
@@ -197,6 +222,8 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out.')
     return redirect('login')
+
+
 
 @login_required
 def add_to_cart(request, category, pk):
@@ -243,13 +270,48 @@ def add_to_cart(request, category, pk):
         product_model = KidsRunning
     elif category == 'kids_yoga':
         product_model = KidsYoga
+
+    specific_product = get_object_or_404(product_model, pk=pk)
+    
+    # Create or get the Product instance
+    product, created = Product.objects.get_or_create(
+        title=specific_product.title,
+        description=specific_product.description,
+        price=specific_product.price,
+        category=category,
+        image=specific_product.image
+    )
+
+    quantity = int(request.POST.get('quantity', 1))
+
+    if product.quantity >= quantity:
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+        if created:
+            cart_item.quantity = quantity
+        else:
+            cart_item.quantity += quantity
+        cart_item.save()
+        product.quantity -= quantity
+        product.save()
+        messages.success(request, 'Product added to cart.')
     else:
-        product_model = None
+        messages.error(request, 'Not enough stock available.')
+
+    return redirect('cart')
+@login_required
+def add_to_wishlist(request, category, pk):
+    product_model = None
+    if category == 'men_newarrival':
+        product_model = MenNewArrival
+    elif category == 'women_newarrival':
+        product_model = WomenNewArrival
+    elif category == 'kids_newarrival':
+        product_model = KidsNewArrival
+    # ... (repeat for all other categories)
 
     if product_model:
         specific_product = get_object_or_404(product_model, pk=pk)
         
-        # Create or get a Product instance
         product, created = Product.objects.get_or_create(
             title=specific_product.title,
             description=specific_product.description,
@@ -258,63 +320,8 @@ def add_to_cart(request, category, pk):
             image=specific_product.image
         )
         
-        # Now use the Product instance for the CartItem
-        cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-        if not created:
-            cart_item.quantity += 1
-            cart_item.save()
-    
-    return redirect('cart')
-
-@login_required
-def add_to_wishlist(request, category, pk):
-    if category == 'men_newarrival':
-        product = get_object_or_404(MenNewArrival, pk=pk)
-    elif category == 'women_newarrival':
-        product = get_object_or_404(WomenNewArrival, pk=pk)
-    elif category == 'kids_newarrival':
-        product = get_object_or_404(KidsNewArrival, pk=pk)
-    elif category == 'men_tshirts':
-        product = get_object_or_404(MenTShirts, pk=pk)
-    elif category == 'men_polos':
-        product = get_object_or_404(MenPolos, pk=pk)
-    elif category == 'men_shorts':
-        product = get_object_or_404(MenShorts, pk=pk)
-    elif category == 'men_trackpants_joggers':
-        product = get_object_or_404(MenTrackpantsJoggers, pk=pk)
-    elif category == 'men_running':
-        product = get_object_or_404(MenRunning, pk=pk)
-    elif category == 'men_yoga':
-        product = get_object_or_404(MenYoga, pk=pk)
-    elif category == 'women_tshirts':
-        product = get_object_or_404(WomenTShirts, pk=pk)
-    elif category == 'women_polos':
-        product = get_object_or_404(WomenPolos, pk=pk)
-    elif category == 'women_shorts':
-        product = get_object_or_404(WomenShorts, pk=pk)
-    elif category == 'women_trackpants_joggers':
-        product = get_object_or_404(WomenTrackpantsJoggers, pk=pk)
-    elif category == 'women_running':
-        product = get_object_or_404(WomenRunning, pk=pk)
-    elif category == 'women_yoga':
-        product = get_object_or_404(WomenYoga, pk=pk)
-    elif category == 'kids_tshirts':
-        product = get_object_or_404(KidsTShirts, pk=pk)
-    elif category == 'kids_polos':
-        product = get_object_or_404(KidsPolos, pk=pk)
-    elif category == 'kids_shorts':
-        product = get_object_or_404(KidsShorts, pk=pk)
-    elif category == 'kids_trackpants_joggers':
-        product = get_object_or_404(KidsTrackpantsJoggers, pk=pk)
-    elif category == 'kids_running':
-        product = get_object_or_404(KidsRunning, pk=pk)
-    elif category == 'kids_yoga':
-        product = get_object_or_404(KidsYoga, pk=pk)
-    else:
-        product = None
-
-    if product:
         WishlistItem.objects.get_or_create(user=request.user, product=product)
+    
     return redirect('wishlist')
 
 @login_required
@@ -330,3 +337,35 @@ def wishlist_view(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+
+
+
+@login_required
+def process_payment(request):
+    if request.method == 'POST':
+        selected_items = request.POST.getlist('selected_items')
+        cart_items = CartItem.objects.filter(id__in=selected_items, user=request.user)
+        total_price = sum(item.product.price * item.quantity for item in cart_items)
+
+        # Create order
+        order = Order.objects.create(user=request.user, total_price=total_price)
+        order.items.set(cart_items)
+        order.save()
+
+        # Update product quantities
+        for item in cart_items:
+            product = item.product
+            product.quantity -= item.quantity
+            product.save()
+
+        # Clear cart
+        cart_items.delete()
+
+        return redirect('order_success')
+
+    return redirect('cart')
+
+@login_required
+def order_success(request):
+    return render(request, 'order_success.html')

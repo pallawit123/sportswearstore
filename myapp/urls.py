@@ -4,13 +4,13 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("men/", views.men, name="men"),
-    path("contact-us/", views.Contact, name="contact"),
+    path("contact-us/", views.contact_view, name="contact"),  # Corrected line
     path("<str:category>/product/<int:pk>/", views.product_detail, name="product_detail"),
     path("add_to_cart/<str:category>/<int:pk>/", views.add_to_cart, name="add_to_cart"),
     path("add_to_wishlist/<str:category>/<int:pk>/", views.add_to_wishlist, name="add_to_wishlist"),
     path("cart/", views.cart_view, name="cart"),
     path("wishlist/", views.wishlist_view, name="wishlist"),
-    path("login/", views.login_view, name="login"),  # Ensure this line is present
+    path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.register_view, name="register"),
     path('profile/', views.profile, name='profile'),
@@ -38,4 +38,7 @@ urlpatterns = [
     path("kids/trackpants-joggers/", views.kids_trackpants_joggers, name="kids_trackpants_joggers"),
     path("kids/running/", views.kids_running, name="kids_running"),
     path("kids/yoga/", views.kids_yoga, name="kids_yoga"),
-]   
+    path("order_success/", views.order_success, name="order_success"),
+     path("process_payment/", views.process_payment, name="process_payment"),  # Add this line
+]
+

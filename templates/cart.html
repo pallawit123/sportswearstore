@@ -1,29 +1,314 @@
-<!-- filepath: /d:/pythonfinal/Hello/templates/cart.html -->
 {% extends 'base.html' %}
 
 {% block title %}Cart{% endblock title %}
 
 {% block body %}
-<div class="container mt-5">
+<div class="container mt-5" id="mainContainer">
     <h1 class="display-4">Your Cart</h1>
-    <div class="row">
-        {% if cart_items %}
-            {% for item in cart_items %}
+    <form action="{% url 'process_payment' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-8">
+                {% if cart_items %}
+                    {% for item in cart_items %}
+                    <div class="col-12 mb-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <input type="checkbox" name="selected_items" value="{{ item.id }}" class="mr-3">
+                                <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.title }}" style="object-fit: cover; width: 30%; height: auto;">
+                                <div class="cart-item-details ml-3">
+                                    <h5 class="card-title">{{ item.product.title }}</h5>
+                                    <p class="card-text">{{ item.product.description }}</p>
+                                    <p class="price">₹{{ item.product.price }}</p>
+                                    <p>Quantity: {{ item.quantity }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Your cart is empty.</p>
+                {% endif %}
+            </div>
             <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.title }}" style="object-fit: cover; width: 100%; height: 300px;">
+                <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ item.product.title }}</h5>
-                        <p class="card-text">{{ item.product.description }}</p>
-                        <p class="price">₹{{ item.product.price }}</p>
-                        <p>Quantity: {{ item.quantity }}</p>
+                        <h5 class="card-title">Buy Now</h5>
+                        <button type="submit" class="btn btn-primary btn-block" id="buyNowButton">Buy Now</button>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-        {% else %}
-            <p>Your cart is empty.</p>
-        {% endif %}
-    </div>
+        </div>
+    </form>
 </div>
+
+<!-- Modal HTML -->
+<div class="modal" id="paymentModal" style="display: none;">
+    <div class="modal-header" id="modalHeader">
+        <h5>Checkout</h5>
+        <button type="button" class="close" onclick="closeModal()">&times;</button>
+    </div>
+    <form class="form">
+        <div class="payment--options">
+            <button name="paypal" type="button">
+                <!-- PayPal SVG -->
+            </button>
+            <button name="apple-pay" type="button">
+                <!-- Apple Pay SVG -->
+            </button>
+            <button name="google-pay" type="button">
+                <!-- Google Pay SVG -->
+            </button>
+        </div>
+        <div class="separator">
+            <hr class="line">
+            <p>or pay using credit card</p>
+            <hr class="line">
+        </div>
+        <div class="credit-card-info--form">
+            <div class="input_container">
+                <label for="cardName" class="input_label">Card holder full name</label>
+                <input id="cardName" class="input_field" type="text" name="input-name" placeholder="Enter your full name">
+            </div>
+            <div class="input_container">
+                <label for="cardNumber" class="input_label">Card Number</label>
+                <input id="cardNumber" class="input_field" type="number" name="input-name" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="input_container">
+                <label for="expiryDate" class="input_label">Expiry Date / CVV</label>
+                <div class="split">
+                    <input id="expiryDate" class="input_field" type="text" name="input-name" placeholder="01/23">
+                    <input id="cvv" class="input_field" type="number" name="cvv" placeholder="CVV">
+                </div>
+            </div>
+        </div>
+        <button class="purchase--btn">Checkout</button>
+    </form>
+</div>
+
+<!-- Modal CSS -->
+<style>
+.modal {
+    width: fit-content;
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 26px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    cursor: move;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.payment--options {
+    width: calc(100% - 40px);
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+    gap: 20px;
+    padding: 10px;
+}
+
+.payment--options button {
+    height: 55px;
+    background: #F2F2F2;
+    border-radius: 11px;
+    padding: 0;
+    border: 0;
+    outline: none;
+}
+
+.payment--options button svg {
+    height: 18px;
+}
+
+.payment--options button:last-child svg {
+    height: 22px;
+}
+
+.separator {
+    width: calc(100% - 20px);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    color: #8B8E98;
+    margin: 0 10px;
+}
+
+.separator > p {
+    word-break: keep-all;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    font-size: 11px;
+    margin: auto;
+}
+
+.separator .line {
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #e8e8e8;
+    margin: auto;
+}
+
+.credit-card-info--form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input_container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.split {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    gap: 15px;
+}
+
+.split input {
+    width: 100%;
+}
+
+.input_label {
+    font-size: 10px;
+    color: #8B8E98;
+    font-weight: 600;
+}
+
+.input_field {
+    width: auto;
+    height: 40px;
+    padding: 0 0 0 16px;
+    border-radius: 9px;
+    outline: none;
+    background-color: #F2F2F2;
+    border: 1px solid #e5e5e500;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.input_field:focus {
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px 2px #242424;
+    background-color: transparent;
+}
+
+.purchase--btn {
+    height: 55px;
+    background: #F2F2F2;
+    border-radius: 11px;
+    border: 0;
+    outline: none;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #363636 0%, #1B1B1B 50%, #000000 100%);
+    box-shadow: 0px 0px 0px 0px #FFFFFF, 0px 0px 0px 0px #000000;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.purchase--btn:hover {
+    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0000003a;
+}
+
+/* Reset input number styles */
+.input_field::-webkit-outer-spin-button,
+.input_field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input_field[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Blur background */
+.blurred {
+    filter: blur(5px);
+    pointer-events: none;
+}
+</style>
+
+<!-- JavaScript to handle button click -->
+<script>
+document.getElementById('buyNowButton').addEventListener('click', function() {
+    document.getElementById('paymentModal').style.display = 'block';
+    document.getElementById('mainContainer').classList.add('blurred');
+});
+
+function closeModal() {
+    document.getElementById('paymentModal').style.display = 'none';
+    document.getElementById('mainContainer').classList.remove('blurred');
+}
+
+// Make the modal draggable
+dragElement(document.getElementById("paymentModal"));
+
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById("modalHeader")) {
+        // if present, the header is where you move the DIV from:
+        document.getElementById("modalHeader").onmousedown = dragMouseDown;
+    } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+</script>
 {% endblock body %}

@@ -3,8 +3,8 @@ from .models import *
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'phone', 'date']
-    search_fields = ['name', 'email', 'phone']
+    list_display = ['name', 'email', 'contact_number', 'message']  # Corrected line
+    search_fields = ['name', 'email', 'contact_number']  # Corrected line
 
 # Men's Category
 @admin.register(MenNewArrival)
