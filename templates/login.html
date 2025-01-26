@@ -1,18 +1,105 @@
-<!-- filepath: /c:/Users/Dell/Desktop/pythonfinal/sportswearstore/templates/login.html -->
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('/static/login.png') no-repeat center center fixed;
+            background-size: cover;
+        }
 
-{% block title %}Login{% endblock title %}
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            background-color: rgba(26, 26, 26, 0.9);
+            color: #fff;
+            border: 1px solid #333;
+        }
 
-{% block content %}
-<div class="container mt-5">
-    <h1>Login</h1>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <div class="text-center mt-3">
-        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: #00bfff;
+        }
+
+        .submit {
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transform: .3s ease;
+            background-color: #00bfff;
+        }
+
+        .submit:hover {
+            background-color: #00bfff96;
+        }
+
+        .signin {
+            text-align: center;
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .signin a {
+            color: #00bfff;
+            text-decoration: none;
+        }
+
+        .signin a:hover {
+            text-decoration: underline;
+        }
+
+        .form label {
+            color: #fff;
+        }
+
+        .form input {
+            background-color: #333;
+            color: #fff;
+            padding: 8px;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <p class="title">Login</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="submit" type="submit">Login</button>
+        </form>
+        <p class="signin">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-</div>
-{% endblock content %}
+</body>
+</html> 

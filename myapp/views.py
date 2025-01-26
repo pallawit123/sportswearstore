@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from .models import Product
 
 def index(request):
     return render(request, 'index.html')
@@ -163,22 +164,17 @@ def product_detail(request, category, pk):
         product = None
     return render(request, 'product_detail.html', {'product': product, 'category': category})
 
-
 def register_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
-        
-        if password == confirm_password:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.save()
-            messages.success(request, 'Registration successful. Please log in.')
-            return redirect('login')
-        else:
-            messages.error(request, 'Passwords do not match.')
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful. You are now logged in.')
+            return redirect('index')  # Redirect to the home page or any other page
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -190,6 +186,8 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('index')  # Redirect to the home page or any other page
+            else:
+                messages.error(request, 'Invalid username or password.')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -201,32 +199,122 @@ def logout_view(request):
     return redirect('login')
 
 @login_required
-def add_to_cart(request, pk, category):
-    if category == 'men':
-        product = get_object_or_404(MenNewArrival, pk=pk)
-    elif category == 'women':
-        product = get_object_or_404(WomenNewArrival, pk=pk)
-    elif category == 'kids':
-        product = get_object_or_404(KidsNewArrival, pk=pk)
+def add_to_cart(request, category, pk):
+    product_model = None
+    if category == 'men_newarrival':
+        product_model = MenNewArrival
+    elif category == 'women_newarrival':
+        product_model = WomenNewArrival
+    elif category == 'kids_newarrival':
+        product_model = KidsNewArrival
+    elif category == 'men_tshirts':
+        product_model = MenTShirts
+    elif category == 'men_polos':
+        product_model = MenPolos
+    elif category == 'men_shorts':
+        product_model = MenShorts
+    elif category == 'men_trackpants_joggers':
+        product_model = MenTrackpantsJoggers
+    elif category == 'men_running':
+        product_model = MenRunning
+    elif category == 'men_yoga':
+        product_model = MenYoga
+    elif category == 'women_tshirts':
+        product_model = WomenTShirts
+    elif category == 'women_polos':
+        product_model = WomenPolos
+    elif category == 'women_shorts':
+        product_model = WomenShorts
+    elif category == 'women_trackpants_joggers':
+        product_model = WomenTrackpantsJoggers
+    elif category == 'women_running':
+        product_model = WomenRunning
+    elif category == 'women_yoga':
+        product_model = WomenYoga
+    elif category == 'kids_tshirts':
+        product_model = KidsTShirts
+    elif category == 'kids_polos':
+        product_model = KidsPolos
+    elif category == 'kids_shorts':
+        product_model = KidsShorts
+    elif category == 'kids_trackpants_joggers':
+        product_model = KidsTrackpantsJoggers
+    elif category == 'kids_running':
+        product_model = KidsRunning
+    elif category == 'kids_yoga':
+        product_model = KidsYoga
     else:
-        product = None
-    cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
+        product_model = None
+
+    if product_model:
+        specific_product = get_object_or_404(product_model, pk=pk)
+        
+        # Create or get a Product instance
+        product, created = Product.objects.get_or_create(
+            title=specific_product.title,
+            description=specific_product.description,
+            price=specific_product.price,
+            category=category,
+            image=specific_product.image
+        )
+        
+        # Now use the Product instance for the CartItem
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+    
     return redirect('cart')
 
 @login_required
-def add_to_wishlist(request, pk, category):
-    if category == 'men':
+def add_to_wishlist(request, category, pk):
+    if category == 'men_newarrival':
         product = get_object_or_404(MenNewArrival, pk=pk)
-    elif category == 'women':
+    elif category == 'women_newarrival':
         product = get_object_or_404(WomenNewArrival, pk=pk)
-    elif category == 'kids':
+    elif category == 'kids_newarrival':
         product = get_object_or_404(KidsNewArrival, pk=pk)
+    elif category == 'men_tshirts':
+        product = get_object_or_404(MenTShirts, pk=pk)
+    elif category == 'men_polos':
+        product = get_object_or_404(MenPolos, pk=pk)
+    elif category == 'men_shorts':
+        product = get_object_or_404(MenShorts, pk=pk)
+    elif category == 'men_trackpants_joggers':
+        product = get_object_or_404(MenTrackpantsJoggers, pk=pk)
+    elif category == 'men_running':
+        product = get_object_or_404(MenRunning, pk=pk)
+    elif category == 'men_yoga':
+        product = get_object_or_404(MenYoga, pk=pk)
+    elif category == 'women_tshirts':
+        product = get_object_or_404(WomenTShirts, pk=pk)
+    elif category == 'women_polos':
+        product = get_object_or_404(WomenPolos, pk=pk)
+    elif category == 'women_shorts':
+        product = get_object_or_404(WomenShorts, pk=pk)
+    elif category == 'women_trackpants_joggers':
+        product = get_object_or_404(WomenTrackpantsJoggers, pk=pk)
+    elif category == 'women_running':
+        product = get_object_or_404(WomenRunning, pk=pk)
+    elif category == 'women_yoga':
+        product = get_object_or_404(WomenYoga, pk=pk)
+    elif category == 'kids_tshirts':
+        product = get_object_or_404(KidsTShirts, pk=pk)
+    elif category == 'kids_polos':
+        product = get_object_or_404(KidsPolos, pk=pk)
+    elif category == 'kids_shorts':
+        product = get_object_or_404(KidsShorts, pk=pk)
+    elif category == 'kids_trackpants_joggers':
+        product = get_object_or_404(KidsTrackpantsJoggers, pk=pk)
+    elif category == 'kids_running':
+        product = get_object_or_404(KidsRunning, pk=pk)
+    elif category == 'kids_yoga':
+        product = get_object_or_404(KidsYoga, pk=pk)
     else:
         product = None
-    WishlistItem.objects.get_or_create(user=request.user, product=product)
+
+    if product:
+        WishlistItem.objects.get_or_create(user=request.user, product=product)
     return redirect('wishlist')
 
 @login_required
@@ -242,23 +330,3 @@ def wishlist_view(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
-
-
-
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-
-def register_view(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Registration successful. You are now logged in.')
-            return redirect('index')  # Redirect to the home page or any other page
-    else:
-        form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})

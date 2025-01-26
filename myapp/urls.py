@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path("add_to_wishlist/<str:category>/<int:pk>/", views.add_to_wishlist, name="add_to_wishlist"),
     path("cart/", views.cart_view, name="cart"),
     path("wishlist/", views.wishlist_view, name="wishlist"),
-    path("login/", views.login_view, name="login"),
+    path("login/", views.login_view, name="login"),  # Ensure this line is present
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.register_view, name="register"),
     path('profile/', views.profile, name='profile'),
@@ -38,5 +38,4 @@ urlpatterns = [
     path("kids/trackpants-joggers/", views.kids_trackpants_joggers, name="kids_trackpants_joggers"),
     path("kids/running/", views.kids_running, name="kids_running"),
     path("kids/yoga/", views.kids_yoga, name="kids_yoga"),
-
-]
+]   

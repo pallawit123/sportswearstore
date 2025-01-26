@@ -10,7 +10,5 @@ admin.site.index_title = "Welcome to AthleTch Sports Wear Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.login_view, name='login'),
-    path('register/', views.register_view, name='register'),  # Add this line for the registration view
     path('', include('myapp.urls')),  # Include your app's URLs
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
