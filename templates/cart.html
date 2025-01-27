@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container mt-5" id="mainContainer">
     <h1 class="display-4">Your Cart</h1>
-    <form action="{% url 'process_payment' %}" method="post">
+    <form action="{% url 'order_success' %}" method="post">
         {% csrf_token %}
         <div class="row">
             <div class="col-md-8">
@@ -34,7 +34,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Buy Now</h5>
-                        <button type="submit" class="btn btn-primary btn-block" id="buyNowButton">Buy Now</button>
+                        <button type="button" class="btn btn-primary btn-block" id="buyNowButton">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -44,45 +44,26 @@
 
 <!-- Modal HTML -->
 <div class="modal" id="paymentModal" style="display: none;">
-    <div class="modal-header" id="modalHeader">
-        <h5>Checkout</h5>
-        <button type="button" class="close" onclick="closeModal()">&times;</button>
-    </div>
-    <form class="form">
-        <div class="payment--options">
-            <button name="paypal" type="button">
-                <!-- PayPal SVG -->
-            </button>
-            <button name="apple-pay" type="button">
-                <!-- Apple Pay SVG -->
-            </button>
-            <button name="google-pay" type="button">
-                <!-- Google Pay SVG -->
-            </button>
+    <form class="form" id="paymentForm">
+        <label for="name" class="label">
+            <span class="title">Card holder full name</span>
+            <input class="input-field" type="text" name="input-name" title="Input title" placeholder="Enter your full name" required />
+        </label>
+        <label for="serialCardNumber" class="label">
+            <span class="title">Card Number</span>
+            <input id="serialCardNumber" class="input-field" type="number" name="input-name" title="Input title" placeholder="0000 0000 0000 0000" required />
+        </label>
+        <div class="split">
+            <label for="ExDate" class="label">
+                <span class="title">Expiry Date</span>
+                <input id="ExDate" class="input-field" type="text" name="input-name" title="Expiry Date" placeholder="01/23" required />
+            </label>
+            <label for="cvv" class="label">
+                <span class="title">CVV</span>
+                <input id="cvv" class="input-field" type="number" name="cvv" title="CVV" placeholder="CVV" required />
+            </label>
         </div>
-        <div class="separator">
-            <hr class="line">
-            <p>or pay using credit card</p>
-            <hr class="line">
-        </div>
-        <div class="credit-card-info--form">
-            <div class="input_container">
-                <label for="cardName" class="input_label">Card holder full name</label>
-                <input id="cardName" class="input_field" type="text" name="input-name" placeholder="Enter your full name">
-            </div>
-            <div class="input_container">
-                <label for="cardNumber" class="input_label">Card Number</label>
-                <input id="cardNumber" class="input_field" type="number" name="input-name" placeholder="0000 0000 0000 0000">
-            </div>
-            <div class="input_container">
-                <label for="expiryDate" class="input_label">Expiry Date / CVV</label>
-                <div class="split">
-                    <input id="expiryDate" class="input_field" type="text" name="input-name" placeholder="01/23">
-                    <input id="cvv" class="input_field" type="number" name="cvv" placeholder="CVV">
-                </div>
-            </div>
-        </div>
-        <button class="purchase--btn">Checkout</button>
+        <input class="checkout-btn" type="button" value="Checkout" onclick="submitPaymentForm()" />
     </form>
 </div>
 
@@ -91,160 +72,120 @@
 .modal {
     width: fit-content;
     height: fit-content;
-    background: #FFFFFF;
+    background: #0c0f14;
     box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 26px;
+    border-radius: 25px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    cursor: move;
-    background-color: #f2f2f2;
-    border-bottom: 1px solid #ddd;
-    border-top-left-radius: 26px;
-    border-top-right-radius: 26px;
+    display: none;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-}
-
-.payment--options {
-    width: calc(100% - 40px);
-    display: grid;
-    grid-template-columns: 33% 34% 33%;
-    gap: 20px;
-    padding: 10px;
-}
-
-.payment--options button {
-    height: 55px;
-    background: #F2F2F2;
-    border-radius: 11px;
-    padding: 0;
-    border: 0;
-    outline: none;
-}
-
-.payment--options button svg {
-    height: 18px;
-}
-
-.payment--options button:last-child svg {
-    height: 22px;
-}
-
-.separator {
-    width: calc(100% - 20px);
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 10px;
-    color: #8B8E98;
-    margin: 0 10px;
-}
-
-.separator > p {
-    word-break: keep-all;
-    display: block;
-    text-align: center;
-    font-weight: 600;
-    font-size: 11px;
-    margin: auto;
-}
-
-.separator .line {
-    display: inline-block;
-    width: 100%;
-    height: 1px;
-    border: 0;
-    background-color: #e8e8e8;
-    margin: auto;
-}
-
-.credit-card-info--form {
+    background: #0c0f14;
+    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    width: 320px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    padding: 20px;
+    position: relative;
+    border-radius: 25px;
 }
-
-.input_container {
-    width: 100%;
-    height: fit-content;
+.form .label {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+.form .label:has(input:focus) .title {
+    top: 0;
+    left: 0;
+    color: #d17842;
+}
+.form .label .title {
+    padding: 0 10px;
+    transition: all 300ms;
+    font-size: 12px;
+    color: #8b8e98;
+    font-weight: 600;
+    width: -moz-fit-content;
+    width: fit-content;
+    top: 14px;
+    position: relative;
+    left: 15px;
+    background: #0c0f14;
+}
+.form .input-field {
+    width: auto;
+    height: 50px;
+    text-indent: 15px;
+    border-radius: 15px;
+    outline: none;
+    background-color: transparent;
+    border: 1px solid #21262e;
+    transition: all 0.3s;
+    caret-color: #d17842;
+    color: #aeaeae;
 }
 
-.split {
-    display: grid;
-    grid-template-columns: 4fr 2fr;
+.form .input-field:hover {
+    border-color: rgba(209, 121, 66, 0.5);
+}
+
+.form .input-field:focus {
+    border-color: #d17842;
+}
+.form .split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
     gap: 15px;
 }
-
-.split input {
-    width: 100%;
+.form .split label {
+    width: 130px;
 }
-
-.input_label {
-    font-size: 10px;
-    color: #8B8E98;
-    font-weight: 600;
-}
-
-.input_field {
-    width: auto;
-    height: 40px;
-    padding: 0 0 0 16px;
-    border-radius: 9px;
-    outline: none;
-    background-color: #F2F2F2;
-    border: 1px solid #e5e5e500;
-    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
-}
-
-.input_field:focus {
-    border: 1px solid transparent;
-    box-shadow: 0px 0px 0px 2px #242424;
-    background-color: transparent;
-}
-
-.purchase--btn {
-    height: 55px;
-    background: #F2F2F2;
-    border-radius: 11px;
-    border: 0;
-    outline: none;
-    color: #ffffff;
-    font-size: 13px;
+.form .checkout-btn {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-radius: 25px;
     font-weight: 700;
-    background: linear-gradient(180deg, #363636 0%, #1B1B1B 50%, #000000 100%);
-    box-shadow: 0px 0px 0px 0px #FFFFFF, 0px 0px 0px 0px #000000;
     transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    border: none;
+    justify-content: center;
+    fill: #fff;
+    color: #fff;
+    border: 2px solid transparent;
+    background: #d17842;
+    transition: all 200ms;
+}
+.form .checkout-btn:active {
+    scale: 0.95;
 }
 
-.purchase--btn:hover {
-    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0000003a;
+.form .checkout-btn:hover {
+    color: #d17842;
+    border: 2px solid #d17842;
+    background: transparent;
 }
 
 /* Reset input number styles */
-.input_field::-webkit-outer-spin-button,
-.input_field::-webkit-inner-spin-button {
+.input-field::-webkit-outer-spin-button,
+.input-field::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.input_field[type=number] {
+.input-field[type=number] {
     -moz-appearance: textfield;
 }
 
@@ -267,48 +208,10 @@ function closeModal() {
     document.getElementById('mainContainer').classList.remove('blurred');
 }
 
-// Make the modal draggable
-dragElement(document.getElementById("paymentModal"));
-
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById("modalHeader")) {
-        // if present, the header is where you move the DIV from:
-        document.getElementById("modalHeader").onmousedown = dragMouseDown;
-    } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
-
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
+function submitPaymentForm() {
+    // Simulate form submission and show success message
+    closeModal();
+    alert('Checkout Successfully');
 }
 </script>
 {% endblock body %}

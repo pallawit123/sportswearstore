@@ -12,10 +12,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import Product, Order
 
-
-
-    
-
 def contact_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -34,8 +30,6 @@ def contact_view(request):
         return redirect('contact')  # Changed from 'contact_us' to 'contact'
     
     return render(request, 'contact.html')
-
-
 
 def index(request):
     return render(request, 'index.html')
@@ -223,8 +217,6 @@ def logout_view(request):
     messages.success(request, 'You have been logged out.')
     return redirect('login')
 
-
-
 @login_required
 def add_to_cart(request, category, pk):
     product_model = None
@@ -298,6 +290,7 @@ def add_to_cart(request, category, pk):
         messages.error(request, 'Not enough stock available.')
 
     return redirect('cart')
+
 @login_required
 def add_to_wishlist(request, category, pk):
     product_model = None
@@ -337,12 +330,8 @@ def wishlist_view(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
-
-
-
-
 @login_required
-def process_payment(request):
+def order_success(request):
     if request.method == 'POST':
         selected_items = request.POST.getlist('selected_items')
         cart_items = CartItem.objects.filter(id__in=selected_items, user=request.user)
@@ -362,10 +351,4 @@ def process_payment(request):
         # Clear cart
         cart_items.delete()
 
-        return redirect('order_success')
-
-    return redirect('cart')
-
-@login_required
-def order_success(request):
     return render(request, 'order_success.html')

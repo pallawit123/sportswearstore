@@ -56,8 +56,14 @@ Contact us
 </style>
 
 <!-- Contact Form Section -->
+
+
+
+
+
 <div class="container" style="max-width: 600px; margin-top: 30px;">
-    <form action="{% url 'contact' %}" method="POST">
+    <!-- Updated action URL to include trailing slash -->
+    <form action="/contact-us/" method="POST">
         {% csrf_token %}
         <div class="mb-3">
             <label for="name" class="form-label">Your Name</label>
@@ -69,6 +75,7 @@ Contact us
             <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
         </div>
 
+        <!-- Add the contact number field here -->
         <div class="mb-3">
             <label for="contact-number" class="form-label">Contact Number</label>
             <input type="tel" class="form-control" id="contact-number" name="contact_number" placeholder="Enter your contact number" required>
@@ -83,4 +90,94 @@ Contact us
     </form>
 </div>
 
+<!-- Contact Information Section -->
+<section id="contact-info" class="my-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Our Contact Details</h3>
+            <ul class="list-unstyled">
+                <li><strong>Email:</strong> <a href="mailto:info@yourwebsite.com">info@yourwebsite.com</a></li>
+                <li><strong>Phone:</strong> +1 234 567 890</li>
+                <li><strong>Fax:</strong> +1 234 567 891</li>
+                <li><strong>Address:</strong> 123 Your Street, Kathmandu, Nepal</li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Our Location</h3>
+            <!-- Google Map with marker for Kathmandu -->
+            <iframe 
+                src="https://www.google.com/maps?q=27.7106,85.3240&output=embed" 
+                width="100%" height="250" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Business Hours Section -->
+<section id="business-hours" class="my-4">
+    <h3>Business Hours</h3>
+    <ul>
+        <li><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</li>
+        <li><strong>Saturday:</strong> 10:00 AM - 4:00 PM</li>
+        <li><strong>Sunday:</strong> Closed</li>
+    </ul>
+</section>
+
+<!-- Social Media Section -->
+<section id="social-media" class="my-4">
+    <h3>Connect With Us</h3>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="https://www.facebook.com/yourpage" target="_blank"><img src="facebook-icon.png" alt="Facebook" width="30"></a></li>
+        <li class="list-inline-item"><a href="https://twitter.com/yourpage" target="_blank"><img src="twitter-icon.png" alt="Twitter" width="30"></a></li>
+        <li class="list-inline-item"><a href="https://www.instagram.com/yourpage" target="_blank"><img src="instagram-icon.png" alt="Instagram" width="30"></a></li>
+        <li class="list-inline-item"><a href="https://www.linkedin.com/company/yourpage" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn" width="30"></a></li>
+    </ul>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="my-4">
+    <h3>Frequently Asked Questions</h3>
+    <ul>
+        <li><strong>What are your business hours?</strong> Monday - Friday, 9 AM - 6 PM.</li>
+        <li><strong>How can I track my order?</strong> You will receive an email with a tracking number.</li>
+        <li><strong>Do you offer international shipping?</strong> Yes, we offer worldwide shipping.</li>
+        <li><strong>How do I cancel my order?</strong> Orders can be canceled within 24 hours of purchase. Please contact customer support.</li>
+    </ul>
+</section>
+
+<section id="live-chat" class="my-4">
+    <h3>Need Help? Chat with Us</h3>
+    <button class="btn btn-success" id="live-chat-btn">Start Live Chat</button>
+</section>
+
+<!-- Tawk.to Integration Script -->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/677ccd9faf5bfec1dbe7b47f/1igvo6eca';  // Replace this with your Tawk.to ID
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+
+    // JavaScript to open the Tawk.to chat on button click
+    document.getElementById('live-chat-btn').addEventListener('click', function() {
+        // Wait for Tawk_API to load and open chat
+        Tawk_API.toggle();  // This will toggle the chat window
+    });
+</script>
+
+
+
+
+
+
+
 {% endblock %}
+
+
+
+
+
