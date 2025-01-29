@@ -39,5 +39,7 @@ urlpatterns = [
     path('kids/trackpants-joggers/', views.kids_trackpants_joggers, name='kids_trackpants_joggers'),
     path('kids/running/', views.kids_running, name='kids_running'),
     path('kids/yoga/', views.kids_yoga, name='kids_yoga'),
-    path('order_success/', views.order_success, name='order_success'),  # Ensure this line is present
+    path('order_success/', views.order_success, name='order_success'),
+    path('transaction_success/', views.transaction_success, name='transaction_success'),
+    path('transaction_failed/', views.transaction_failed, name='transaction_failed'),
 ]

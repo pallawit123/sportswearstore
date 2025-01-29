@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f5f5f5;
+        font-family: "Roboto", sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+      }
+
+      p {
+        margin: 10px 0;
+        font-size: 16px;
+      }
+
+      .email-container {
+        background-color: #ffffff;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .email-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .email-header img {
+        max-width: 150px;
+      }
+
+      .email-header__title {
+        color: #334ac0;
+        font-size: 28px;
+        margin: 20px 0;
+      }
+
+      .email-header__content p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+      }
+
+      .btn {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .btn a {
+        text-decoration: none;
+      }
+
+      button {
+        background-color: #334ac0;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #1f3d8f;
+      }
+
+      .line {
+        margin-top: 30px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .order-summary,
+      .customer-info {
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .order-summary h3,
+      .customer-info h3 {
+        margin-bottom: 15px;
+        color: #334ac0;
+      }
+
+      .order-summary table,
+      .customer-info table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .order-summary td,
+      .customer-info td {
+        padding: 12px 8px;
+        text-align: left;
+      }
+
+      .order-summary td:last-child,
+      .customer-info td:last-child {
+        text-align: right;
+      }
+
+      .order-summary th {
+        background-color: #334ac0;
+        color: #fff;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .order-summary td,
+      .customer-info td {
+        font-size: 14px;
+        color: #555;
+      }
+
+      .order-summary .total-price {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-icons img {
+        width: 30px;
+      }
+
+      .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .footer a {
+        color: #334ac0;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+    </style>
+    <title>Payment Success</title>
+  </head>
+
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <img src="https://btw-cdn.com/assets/email/logo-text-black.png" alt="SmartBTW Logo" />
+        <h1 class="email-header__title">Payment Successful!</h1>
+        <p>Dear Komang,</p>
+        <p>We are excited to inform you that your payment has been successfully processed. Your purchased package will be activated within the next 24 hours.</p>
+      </div>
+
+      <div class="btn">
+        <a href="#"><button>View Order</button></a>
+        <a href="#" style="color: #334ac0; text-decoration: none; font-weight: bold;">Visit Smart BTW</a>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <table>
+          <tr>
+            <td colspan="2">Premium SKD Package - Ready to Pass SKD SEKDIN/CPNS</td>
+            <td class="total-price">Rp 399.000</td>
+          </tr>
+          <tr>
+            <td colspan="2">Premium SKD Tryout</td>
+            <td class="total-price">Rp 35.000</td>
+          </tr>
+          <tr>
+            <td colspan="2">Discount</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td colspan="2">Total Price</td>
+            <td class="total-price">Rp 399.000</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="customer-info">
+        <h3>Customer Information</h3>
+        <table>
+          <tr>
+            <td>Personal Information</td>
+            <td>Payment Method</td>
+          </tr>
+          <tr>
+            <td>Komang J. Artha</td>
+            <td>Bank Transfer</td>
+          </tr>
+          <tr>
+            <td>Komangartha44@gmail.com</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="footer">
+        <p>You received this notification from SmartBTW</p>
+        <p>PT. Bina Taruna Wiratama | Smart BTW - Sanur Kaja, Denpasar, Bali, 80228</p>
+        <p>
+          <a href="mailto:tanya@smartbtw.com">Help</a> | 
+          <a href="https://wa.me/6281999113000">Contact Us</a>
+        </p>
+      </div>
+
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=100059723581712" target="_blank">
+          <img src="https://btw-cdn.com/assets/email/facebook.png" alt="Facebook" />
+        </a>
+        <a href="https://www.instagram.com/bimbelbtw_sekdin/" target="_blank">
+          <img src="https://btw-cdn.com/assets/email/instagram.png" alt="Instagram" />
+        </a>
+        <a href="https://www.youtube.com/channel/UC-LccIlkxr1-Qt3pDSEuKew" target="_blank">
+          <img src="https://btw-cdn.com/assets/email/youtube.png" alt="YouTube" />
+        </a>
+        <a href="https://btw.co.id/" target="_blank">
+          <img src="https://btw-cdn.com/assets/email/internet.png" alt="Website" />
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import Product, Order
+from .models import CartItem, Product, Order, BillingInfo 
 
 def contact_view(request):
     if request.method == 'POST':
@@ -330,12 +331,33 @@ def wishlist_view(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
 @login_required
 def order_success(request):
     if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        card_number = request.POST.get('card_number')
+        expiry_date = request.POST.get('expiry_date')
+        cvv = request.POST.get('cvv')
         selected_items = request.POST.getlist('selected_items')
         cart_items = CartItem.objects.filter(id__in=selected_items, user=request.user)
         total_price = sum(item.product.price * item.quantity for item in cart_items)
+
+        # Validate billing information
+        if not full_name or not card_number or not expiry_date or not cvv:
+            return redirect('transaction_failed')
+
+        if len(card_number) != 16 or not card_number.isdigit() or len(cvv) != 3 or not cvv.isdigit():
+            return redirect('transaction_failed')
+
+        # Save billing information
+        billing_info = BillingInfo.objects.create(
+            user=request.user,
+            full_name=full_name,
+            card_number=card_number,
+            expiry_date=expiry_date,
+            cvv=cvv
+        )
 
         # Create order
         order = Order.objects.create(user=request.user, total_price=total_price)
@@ -351,4 +373,12 @@ def order_success(request):
         # Clear cart
         cart_items.delete()
 
+        return redirect('payment_success')  # Redirect to the new payment success page
+
     return render(request, 'order_success.html')
+
+def transaction_success(request):
+    return render(request, 'payment_success.html')  # Render the new payment success template
+
+def transaction_failed(request):
+    return render(request, 'transaction_failed.html')

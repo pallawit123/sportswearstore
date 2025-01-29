@@ -313,3 +313,15 @@ class Order(models.Model):
         return f"Order {self.id} by {self.user.username}"
     
     
+
+
+class BillingInfo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=255)
+    card_number = models.CharField(max_length=16)
+    expiry_date = models.CharField(max_length=5)
+    cvv = models.CharField(max_length=3)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.full_name}"

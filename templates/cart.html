@@ -5,6 +5,13 @@
 {% block body %}
 <div class="container mt-5" id="mainContainer">
     <h1 class="display-4">Your Cart</h1>
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
     <form action="{% url 'order_success' %}" method="post">
         {% csrf_token %}
         <div class="row">
@@ -44,26 +51,27 @@
 
 <!-- Modal HTML -->
 <div class="modal" id="paymentModal" style="display: none;">
-    <form class="form" id="paymentForm">
-        <label for="name" class="label">
+    <form class="form" id="paymentForm" method="post" action="{% url 'order_success' %}">
+        {% csrf_token %}
+        <label for="full_name" class="label">
             <span class="title">Card holder full name</span>
-            <input class="input-field" type="text" name="input-name" title="Input title" placeholder="Enter your full name" required />
+            <input class="input-field" type="text" name="full_name" title="Input title" placeholder="Enter your full name" required />
         </label>
-        <label for="serialCardNumber" class="label">
+        <label for="card_number" class="label">
             <span class="title">Card Number</span>
-            <input id="serialCardNumber" class="input-field" type="number" name="input-name" title="Input title" placeholder="0000 0000 0000 0000" required />
+            <input id="card_number" class="input-field" type="number" name="card_number" title="Input title" placeholder="0000 0000 0000 0000" required />
         </label>
         <div class="split">
-            <label for="ExDate" class="label">
+            <label for="expiry_date" class="label">
                 <span class="title">Expiry Date</span>
-                <input id="ExDate" class="input-field" type="text" name="input-name" title="Expiry Date" placeholder="01/23" required />
+                <input id="expiry_date" class="input-field" type="text" name="expiry_date" title="Expiry Date" placeholder="01/23" required />
             </label>
             <label for="cvv" class="label">
                 <span class="title">CVV</span>
                 <input id="cvv" class="input-field" type="number" name="cvv" title="CVV" placeholder="CVV" required />
             </label>
         </div>
-        <input class="checkout-btn" type="button" value="Checkout" onclick="submitPaymentForm()" />
+        <input class="checkout-btn" type="submit" value="Checkout" />
     </form>
 </div>
 
@@ -206,12 +214,6 @@ document.getElementById('buyNowButton').addEventListener('click', function() {
 function closeModal() {
     document.getElementById('paymentModal').style.display = 'none';
     document.getElementById('mainContainer').classList.remove('blurred');
-}
-
-function submitPaymentForm() {
-    // Simulate form submission and show success message
-    closeModal();
-    alert('Checkout Successfully');
 }
 </script>
 {% endblock body %}
